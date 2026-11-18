@@ -1,15 +1,8 @@
 import { useDroppable } from '@dnd-kit/core'
+import { STAGE_DOT as DOT } from '../../lib/applications'
 import JobCard from './JobCard'
 
-// Full class names for each stage's color. Tailwind needs to see the whole
-// class name in the code (it can't build "bg-" + stage.id on the fly).
-const DOT = {
-  saved: 'bg-saved',
-  applied: 'bg-applied',
-  interviewing: 'bg-interviewing',
-  offer: 'bg-offer',
-  closed: 'bg-closed',
-}
+// Spelled out in full for the same reason as STAGE_DOT
 const DROP_RING = {
   saved: 'ring-saved',
   applied: 'ring-applied',

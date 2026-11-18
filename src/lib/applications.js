@@ -1,4 +1,6 @@
 import { supabase } from './supabase'
+import { check, pick } from './db'
+import { today } from './dates'
 
 /*
   Everything the app does with the "applications" table lives here,
@@ -14,6 +16,16 @@ export const STAGES = [
   { id: 'offer', label: 'Offer', hint: 'Decisions to make' },
   { id: 'closed', label: 'Closed', hint: 'Rejected, withdrawn, or passed' },
 ]
+
+// Each stage's dot color. Tailwind needs to see whole class names in the
+// code (it can't build "bg-" + stage.id on the fly), so they're spelled out.
+export const STAGE_DOT = {
+  saved: 'bg-saved',
+  applied: 'bg-applied',
+  interviewing: 'bg-interviewing',
+  offer: 'bg-offer',
+  closed: 'bg-closed',
+}
 
 // The fields the form can edit. Used to build empty forms and to
 // make sure we only send real columns to the database.
@@ -31,28 +43,9 @@ export const EMPTY_APPLICATION = {
   notes: '',
 }
 
-// Today's date as "YYYY-MM-DD" in the user's own time zone.
-export function today() {
-  const d = new Date()
-  const pad = (n) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-}
-
-// Empty strings from the form become null in the database,
-// so a blank date is "no date" instead of an error.
-function clean(values) {
-  const row = {}
-  for (const key of [...Object.keys(EMPTY_APPLICATION), 'position']) {
-    if (key in values) row[key] = values[key] === '' ? null : values[key]
-  }
-  return row
-}
-
-// Throw database errors so the page can catch them and show a message.
-function check({ data, error }) {
-  if (error) throw error
-  return data
-}
+// The columns the app is allowed to write.
+const FIELDS = [...Object.keys(EMPTY_APPLICATION), 'position']
+const clean = (values) => pick(values, FIELDS)
 
 export async function listApplications() {
   return check(

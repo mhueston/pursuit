@@ -1,5 +1,12 @@
 // Small helpers for the "YYYY-MM-DD" dates the database stores.
 
+// Today's date as "YYYY-MM-DD" in the user's own time zone.
+export function today() {
+  const d = new Date()
+  const pad = (n) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
 // Turn "2026-11-20" into a Date at local midnight. (new Date("2026-11-20")
 // would use UTC midnight, which shows as the day before on the East Coast.)
 export function parseDate(value) {
