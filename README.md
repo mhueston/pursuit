@@ -75,5 +75,5 @@ Every table uses Supabase **Row Level Security**. Each row stores the `user_id` 
 - [x] Step 1: Project setup, login, database, app layout
 - [x] Step 2: Applications kanban board (add, edit, drag between stages) and visual refresh
 - [x] Step 3: Contacts CRM, touchpoint log, and linking contacts to applications
-- [ ] Step 4: Today view with follow-ups and stats
+- [x] Step 4: Today view with an Up next list, weekly goal, and pipeline
 - [ ] Step 5: Deploy to Vercel and add to madisonhueston.com

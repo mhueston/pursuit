@@ -44,6 +44,9 @@ export function AuthProvider({ children }) {
       }),
     signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),
     signOut: () => supabase.auth.signOut(),
+    // Save small personal settings (like the weekly goal) on the account itself,
+    // so they follow you to any device. No extra table needed.
+    updateSettings: (settings) => supabase.auth.updateUser({ data: settings }),
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

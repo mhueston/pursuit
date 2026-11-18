@@ -89,6 +89,17 @@ export async function logTouchpoint(contact, { kind, happened_on, summary }) {
   return { touchpoint, contact: updatedContact }
 }
 
+/*
+  "Done" on a follow-up: logs that you reached out today and clears
+  the follow-up date, so they drop off your Up next list.
+*/
+export async function completeFollowUp(contact) {
+  const { contact: updated } = await logTouchpoint(contact, { kind: 'message', summary: 'Followed up' })
+  return check(
+    await supabase.from('contacts').update({ follow_up_on: null }).eq('id', updated.id).select().single(),
+  )
+}
+
 export async function deleteTouchpoint(id) {
   check(await supabase.from('interactions').delete().eq('id', id))
 }

@@ -41,3 +41,19 @@ export function relativeDay(value) {
   if (days < -1 && days >= -6) return `${-days} days ago`
   return shortDate(value)
 }
+
+// "2026-11-18" plus 3 days -> "2026-11-21". Starts from today if there's no date.
+export function addDays(value, days) {
+  const date = parseDate(value) ?? parseDate(today())
+  date.setDate(date.getDate() + days)
+  const pad = (n) => String(n).padStart(2, '0')
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+}
+
+// True if a date falls in the current week (Monday through Sunday).
+export function isThisWeek(value) {
+  const days = daysUntil(value)
+  if (days === null) return false
+  const weekday = (new Date().getDay() + 6) % 7 // Monday = 0 ... Sunday = 6
+  return days >= -weekday && days <= 6 - weekday
+}
