@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/*
+  Design tokens. Tailwind turns each of these into classes,
+  so --color-primary becomes bg-primary, text-primary, border-primary, etc.
+  Change a value here and it updates everywhere.
+*/
+@theme {
+  /* Base: bright and clean */
+  --color-canvas: #ffffff;        /* page background */
+  --color-cloud: #f4f5f8;         /* soft gray tiles, columns, inputs */
+  --color-ink: #1b1c21;           /* main text */
+  --color-muted: #6b6f7a;         /* secondary text */
+  --color-line: #e4e6eb;          /* borders and dividers */
+
+  /* Action */
+  --color-primary: #2f6bff;       /* buttons, links, focus */
+  --color-primary-dark: #1f55e0;  /* hover state for primary */
+  --color-coral: #ec4a3a;         /* overdue and errors */
+
+  /* Stage colors: each column has its own, so you can tell
+     where a job is at a glance */
+  --color-saved: #3ba7ff;
+  --color-applied: #8b5cf6;
+  --color-interviewing: #f59e0b;
+  --color-offer: #16b364;
+  --color-closed: #a3a7b2;
+
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+
+  /* A visible focus ring for keyboard users on every interactive element */
+  :focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 55%, transparent);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
